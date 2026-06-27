@@ -83,20 +83,27 @@
           </div>
 
           <div class="map-frame"><iframe
-        src="https://maps.google.com/maps?q=No%20341%20Mannar%20Road%20Veppankulam%20Vavuniya&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        width="100%"
-        height="300"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy">
-    </iframe></div>
+            src="https://maps.google.com/maps?q=No%20341%20Mannar%20Road%20Veppankulam%20Vavuniya&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="300"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+          </iframe></div>
         </div>
 
         <div class="contact-card">
           <h3 style="margin-bottom:6px;">Send us a message</h3>
           <p style="margin-bottom:24px;">We read every message — no auto-responders, no sales queue.</p>
 
-          <form id="contactForm" novalidate>
+          <!-- ✅ FIXED: action points to Formspree. Replace YOUR_FORM_ID with your actual ID from formspree.io -->
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+            <!-- Formspree: redirect after successful submission -->
+            <input type="hidden" name="_next" value="https://yathavanjd.github.io/Vertex_Degital/contact.html?sent=true">
+            <!-- Formspree: custom subject line in your inbox -->
+            <input type="hidden" name="_subject" value="New enquiry from Vertex Digital website">
+
             <div class="two-col">
               <div class="field">
                 <label for="name">Full name</label>
@@ -127,8 +134,8 @@
               <label for="message">Project details</label>
               <textarea id="message" name="message" placeholder="What are you trying to build or fix?" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;">Send message</button>
-            <p id="formStatus" role="status"></p>
+            <button type="submit" class="btn btn-primary" style="width:100%;" id="submitBtn">Send message</button>
+            <p id="formStatus" role="status" style="margin-top:12px; font-size:0.9rem;"></p>
             <p class="form-note">By submitting, you agree to be contacted about your enquiry. We never share your details with third parties.</p>
           </form>
         </div>
@@ -186,6 +193,20 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // Show success message if redirected back after Formspree submission
+  if (window.location.search.includes('sent=true')) {
+    const status = document.getElementById('formStatus');
+    if (status) {
+      status.textContent = '✅ Message sent! We\'ll reply within one business day.';
+      status.style.color = '#145C5C';
+      status.style.fontWeight = '600';
+    }
+    // Clear the query string from the URL without reloading
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+</script>
 
 <script src="script.js"></script>
 </body>
